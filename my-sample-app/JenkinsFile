@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "your-dockerhub-id/my-sample-app"
+        DOCKER_IMAGE = "srshin80/my-sample-app"
         DOCKER_CREDENTIALS = "docker_password"
-        GIT_CREDENTIALS = "github_password"
+        GIT_CREDENTIALS = "git-ssh-key"
         GIT_REPO = "https://github.com/srshin80/repo1.git"
         MANIFESTS_PATH = "manifests/overlays/dev"
     }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
-                        def app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "./app")
+                        def app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "./my-sample-app/app")
                         app.push()
                         app.push("latest")
                     }
