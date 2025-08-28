@@ -7,8 +7,5 @@ resources:
 namePrefix: dev-
 
 images:
-  - name: docker.io/srshin80/my-sample-app
-    newTag: dev-latest
   - name: srshin80/my-sample-app
-    newName: srshin80/my-sample-app
-    newTag: "15"
+    newTag: latest
