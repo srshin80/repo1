@@ -6,7 +6,7 @@ resources:
 
 namePrefix: dev-
 
-patchesStrategicMerge:
+patches:
   - service-patch.yaml
 
 images:
