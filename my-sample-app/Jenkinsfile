@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "srshin80/my-sample-app"
         DOCKER_CREDENTIALS = "docker_password"
-        GIT_CREDENTIALS = "git-ssh-key"                 // Jenkins에 등록한 SSH private key ID
+        GIT_CREDENTIALS = "git-ssh-key"                // Jenkins에 등록한 SSH private key ID
         GIT_REPO = "git@github.com:srshin80/repo1.git" // SSH 주소로 변경
         MANIFESTS_PATH = "manifests/overlays/dev"
     }
