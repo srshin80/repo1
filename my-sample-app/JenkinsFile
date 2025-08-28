@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "your-dockerhub-id/my-sample-app"
+        DOCKER_CREDENTIALS = "docker_password"
+        GIT_CREDENTIALS = "github_password"
+        GIT_REPO = "https://github.com/srshin80/repo1.git"
+        MANIFESTS_PATH = "manifests/overlays/dev"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git credentialsId: "${GIT_CREDENTIALS}",
+                    url: "${GIT_REPO}",
+                    branch: "main"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                        def app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "./app")
+                        app.push()
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+
+        stage('Update Kustomize Manifests') {
+            steps {
+                script {
+                    sh """
+                    cd ${MANIFESTS_PATH}
+                    kustomize edit set image ${DOCKER_IMAGE}=${DOCKER_IMAGE}:${BUILD_NUMBER}
+                    git config user.email "srshin@uplusit.com"
+                    git config user.name "srshin"
+                    git add .
+                    git commit -m "Update image tag -> ${BUILD_NUMBER}" || echo "No changes to commit"
+                    git push origin main
+                    """
+                }
+            }
+        }
+    }
+}
