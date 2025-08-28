@@ -7,4 +7,4 @@ spec:
   ports:
     - port: 80
       targetPort: 3000
-      nodePort: 32767   # 원하는 NodePort (안 쓰면 자동 배정됨)
+      nodePort: 32080   # 원하는 NodePort (안 쓰면 자동 배정됨)
