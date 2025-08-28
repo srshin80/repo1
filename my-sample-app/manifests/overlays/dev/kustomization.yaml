@@ -6,6 +6,9 @@ resources:
 
 namePrefix: dev-
 
+patchesStrategicMerge:
+  - service-patch.yaml
+
 images:
   - name: srshin80/my-sample-app
     newTag: latest
