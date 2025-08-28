@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-sample-app   # base/service.yaml 의 이름 (prefix는 자동 적용됨)
+  name: my-sample-app   # base service 이름 (prefix는 자동 붙음)
 spec:
   type: NodePort
   ports:
     - port: 80
       targetPort: 3000
-      nodePort: 32080   # 원하는 NodePort (안 쓰면 자동 배정됨)
+      nodePort: 32000   # 반드시 30000~32767 범위, 중복 없어야 함
